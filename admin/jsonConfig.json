@@ -1,0 +1,31 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"userName": {
+			"type": "text",
+			"label": "user name",
+			"newLine": true
+		},
+		"userPassword": {
+			"type": "text",
+			"label": "user password",
+			"newLine": true
+		},
+		"mqttBroker": {
+			"type": "text",
+			"label": "mqtt broker",
+			"newLine": true
+		},
+		"deviceName": {
+			"type": "text",
+			"label": "device Name",
+			"newLine": true
+		},
+		"deviceId": {
+			"type": "text",
+			"label": "device Id",
+			"newLine": true
+		}
+	}
+}

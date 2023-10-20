@@ -1,0 +1,75 @@
+{
+	"expert": "yes",
+	"cli": false,
+	"adapterName": "greensolar-battery",
+	"title": "greensolar mqtt cloud",
+	"description": "greensolar battery",
+	"keywords": [
+		"greensolar",
+		"battery",
+		"mqtt"
+	],
+	"contributors": "",
+	"authorName": "foxthefox",
+	"authorGithub": "foxthefox",
+	"authorEmail": "foxthefox@wysiwis.net",
+	"features": [
+		"adapter"
+	],
+	"adminFeatures": [
+		"custom"
+	],
+	"type": "iot-systems",
+	"startMode": "daemon",
+	"connectionType": "cloud",
+	"dataSource": "push",
+	"connectionIndicator": "yes",
+	"adapterSettings": [
+		{
+			"key": "userName",
+			"label": "user name",
+			"inputType": "text",
+			"defaultValue": "user"
+		},
+		{
+			"key": "userPassword",
+			"label": "user password",
+			"inputType": "text",
+			"defaultValue": "pw"
+		},
+		{
+			"key": "mqttBroker",
+			"label": "mqtt broker",
+			"inputType": "text",
+			"defaultValue": "http://mqtt"
+		},
+		{
+			"key": "deviceName",
+			"label": "device Name",
+			"inputType": "text",
+			"defaultValue": ""
+		},
+		{
+			"key": "deviceId",
+			"label": "device Id",
+			"inputType": "text",
+			"defaultValue": ""
+		}
+	],
+	"language": "JavaScript",
+	"nodeVersion": "16",
+	"adminUi": "json",
+	"releaseScript": "no",
+	"indentation": "Tab",
+	"quotes": "single",
+	"es6class": "yes",
+	"tools": [
+		"ESLint",
+		"type checking"
+	],
+	"gitRemoteProtocol": "HTTPS",
+	"license": "MIT License",
+	"dependabot": "yes",
+	"target": "github",
+	"creatorVersion": "2.3.0"
+}

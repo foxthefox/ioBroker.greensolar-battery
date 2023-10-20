@@ -1,0 +1,8 @@
+{
+	"greensolar-battery adapter settings": "Adaptereinstellungen für greensolar-battery",
+	"userName": "user name",
+	"userPassword": "user password",
+	"mqttBroker": "mqtt broker",
+	"deviceName": "device Name",
+	"deviceId": "device Id"
+}
