@@ -41,14 +41,8 @@
 			"pl": "greensolar battery",
 			"zh-cn": "greensolar battery"
 		},
-		"authors": [
-			"foxthefox <foxthefox@wysiwis.net>"
-		],
-		"keywords": [
-			"greensolar",
-			"battery",
-			"mqtt"
-		],
+		"authors": [ "foxthefox <foxthefox@wysiwis.net>" ],
+		"keywords": [ "greensolar", "battery", "mqtt", "solar" ],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
