@@ -12,19 +12,18 @@ const utils = require('@iobroker/adapter-core');
 // const fs = require("fs");
 
 class GreensolarBattery extends utils.Adapter {
-
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
 		super({
 			...options,
-			name: 'greensolar-battery',
+			name: 'greensolar-battery'
 		});
 		this.on('ready', this.onReady.bind(this));
 		this.on('stateChange', this.onStateChange.bind(this));
 		// this.on('objectChange', this.onObjectChange.bind(this));
-		// this.on('message', this.onMessage.bind(this));
+		this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 	}
 
@@ -57,9 +56,9 @@ class GreensolarBattery extends utils.Adapter {
 				type: 'boolean',
 				role: 'indicator',
 				read: true,
-				write: true,
+				write: true
 			},
-			native: {},
+			native: {}
 		});
 
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
@@ -147,18 +146,56 @@ class GreensolarBattery extends utils.Adapter {
 	//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
 	//  * @param {ioBroker.Message} obj
 	//  */
-	// onMessage(obj) {
-	// 	if (typeof obj === 'object' && obj.message) {
-	// 		if (obj.command === 'send') {
-	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info('send command');
+	onMessage(obj) {
+		this.log.info('send command');
+		this.log.info('obj' + JSON.stringify(obj.message));
+		this.log.info('obj' + obj.message);
+		if (typeof obj === 'object' && obj.message) {
+			if (obj.command === 'send') {
+				// e.g. send email or pushover or whatever
+				this.log.info('send command');
 
-	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-	// 		}
-	// 	}
-	// }
+				// Send response in callback if required
+				if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+			}
+			switch (obj.command) {
+				case 'create':
+					this.log.info('send msg create login data');
+					// here calling function and value in return will be brought back to admin page
+					const resultFromFunction = {
+						native: {
+							mqttUserId: '1232445564356',
+							mqttUserName: 'login.User',
+							mqttPwd: 'login.Password',
+							mqttClientId: 'login.clientID'
+						},
+						reloadBrowser: true
+					};
+					this.sendTo(obj.from, obj.command, resultFromFunction, obj.callback);
+					// Send response in callback if required
+					//this.sendTo(obj.from, obj.command, 'close admin page and reopen', obj.callback);
+					//if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+					//if (obj.callback) this.sendTo(obj.from, obj.command, result, obj.callback);
+					break;
 
+				case 'test':
+					// Try to provide message to admin page
+					this.log.info('send msg for text feedback');
+					if (obj.callback && obj.message) {
+						const url = obj.message.url + ':' + obj.message.port;
+						const optionsMqtt = {
+							port: obj.message.port || 8883,
+							clientId: obj.message.clientId,
+							username: obj.message.user,
+							password: obj.message.pass
+						};
+						const result = JSON.stringify(url) + JSON.stringify(optionsMqtt);
+						this.sendTo(obj.from, obj.command, result, obj.callback);
+					}
+					break;
+			}
+		}
+	}
 }
 
 if (require.main !== module) {

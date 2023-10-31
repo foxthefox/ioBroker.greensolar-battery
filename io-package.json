@@ -75,6 +75,11 @@
 		"userName": "user",
 		"userPassword": "pw",
 		"mqttBroker": "http://mqtt",
+		"mqttPort": 8883,
+		"mqttUserId": "id",
+		"mqttUserName": "name",
+		"mqttPwd": "xxxx",
+		"mqttClientId": "client",
 		"deviceName": "",
 		"deviceId": ""
 	},
