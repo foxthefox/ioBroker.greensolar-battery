@@ -191,7 +191,11 @@ class GreensolarBattery extends utils.Adapter {
 							username: obj.message.user,
 							password: obj.message.pass
 						};
-						const result = JSON.stringify(url) + JSON.stringify(optionsMqtt);
+						const text = JSON.stringify(url) + JSON.stringify(optionsMqtt);
+						const result = {
+							window: '_blank',
+							message: text
+						};
 						this.sendTo(obj.from, obj.command, result, obj.callback);
 					}
 					break;
