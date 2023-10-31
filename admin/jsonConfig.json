@@ -61,7 +61,6 @@
 			"newLine": false
 		},
 		"mqttPwd": {
-			"type": "password",
 			"visible": true,
 			"label": "mqtt pwd",
 			"newLine": false
@@ -79,7 +78,15 @@
 			"label": "Test Message Feedback",
 			"command": "test",
 			"variant": "contained",
-			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\", \"url\": \"${data.mqttUrl}\", \"port\": ${data.mqttPort}, \"clientId\": \"${data.mqttClientId}\"}"
+			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\", \"url\": \"${data.mqttBrokerl}\", \"port\": ${data.mqttPort}, \"clientId\": \"${data.mqttClientId}\"}"
+		},
+		"_send": {
+			"type": "sendTo",
+			"label": "Send",
+			"command": "create",
+			"variant": "outlined",
+			"useNative": true,
+			"jsonData": "{\"user\": \"${data.userName}\", \"msg\": \"Hello World\"}}"
 		},
 		"deviceName": {
 			"type": "text",
