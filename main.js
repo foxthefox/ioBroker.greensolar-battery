@@ -43,6 +43,7 @@ class GreensolarBattery extends utils.Adapter {
 		this.log.info('config mqttBroker: ' + this.config.mqttBroker);
 		this.log.info('config deviceName: ' + this.config.deviceName);
 		this.log.info('config deviceId: ' + this.config.deviceId);
+		this.log.info('devices ' + JSON.stringify(this.config.devices));
 
 		/*
 		For every state in the system there has to be also an object of type state
@@ -168,8 +169,7 @@ class GreensolarBattery extends utils.Adapter {
 							mqttUserName: 'login.User',
 							mqttPwd: 'login.Password',
 							mqttClientId: 'login.clientID'
-						},
-						reloadBrowser: true
+						}
 					};
 					this.sendTo(obj.from, obj.command, resultFromFunction, obj.callback);
 					// Send response in callback if required
@@ -193,7 +193,6 @@ class GreensolarBattery extends utils.Adapter {
 						};
 						const text = JSON.stringify(url) + JSON.stringify(optionsMqtt);
 						const result = {
-							window: '_blank',
 							message: text
 						};
 						this.sendTo(obj.from, obj.command, result, obj.callback);

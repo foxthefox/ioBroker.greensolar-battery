@@ -63,6 +63,11 @@
 		"mqttPwd": {
 			"type": "text",
 			"label": "mqtt pwd",
+			"newLine": true
+		},
+		"mqttClientId": {
+			"type": "text",
+			"label": "mqtt pwd",
 			"newLine": false
 		},
 		"_create": {
@@ -121,8 +126,26 @@
 			"sm": 12,
 			"newLine": true,
 			"type": "table",
+			"uniqueColumns": [ 2 ],
 			"items": [
-				{ "type": "text", "width": "50%", "name": "name", "devid": "devid", "filter": false, "sort": false }
+				{
+					"type": "text",
+					"width": "50%",
+					"title": "name",
+					"attr": "devname",
+					"filter": false,
+					"sort": false,
+					"default": ""
+				},
+				{
+					"type": "text",
+					"width": "50%",
+					"title": "id",
+					"attr": "devid",
+					"filter": false,
+					"sort": false,
+					"default": ""
+				}
 			]
 		}
 	}
