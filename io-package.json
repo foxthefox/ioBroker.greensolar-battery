@@ -74,15 +74,16 @@
 	},
 	"native": {
 		"userName": "user",
-		"userPassword": "pw",
+		"userPassword": "pw456",
 		"mqttBroker": "http://mqtt",
 		"mqttPort": 8883,
 		"mqttUserId": "id",
 		"mqttUserName": "name",
-		"mqttPwd": "xxxx",
+		"mqttPwd": "pw123",
 		"mqttClientId": "client",
 		"deviceName": "",
-		"deviceId": ""
+		"deviceId": "",
+		"devices": []
 	},
 	"objects": [],
 	"instanceObjects": [

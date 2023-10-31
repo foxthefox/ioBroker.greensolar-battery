@@ -61,7 +61,7 @@
 			"newLine": false
 		},
 		"mqttPwd": {
-			"visible": true,
+			"type": "text",
 			"label": "mqtt pwd",
 			"newLine": false
 		},
@@ -72,8 +72,7 @@
 			"variant": "outlined",
 			"useNative": true,
 			"saveConfig": true,
-			"reloadBrowser": true,
-			"jsonData": "{\"user\": \"${data.userName}\", \"pass\": \"${data.userPassword}\"}}"
+			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\"}}"
 		},
 		"_test": {
 			"type": "sendTo",
@@ -85,7 +84,7 @@
 		},
 		"_send": {
 			"type": "sendTo",
-			"label": "Send gor MSG",
+			"label": "Send for MSG",
 			"command": "send",
 			"variant": "outlined",
 			"jsonData": "{\"user\": \"${data.userName}\", \"msg\": \"Hello World\"}}"
@@ -108,6 +107,23 @@
 			"type": "text",
 			"label": "device Id",
 			"newLine": true
+		},
+		"_devicetable": {
+			"newLine": true,
+			"type": "header",
+			"text": "Device settings in table",
+			"sm": 12,
+			"md": 12,
+			"lg": 12,
+			"size": 3
+		},
+		"devices": {
+			"sm": 12,
+			"newLine": true,
+			"type": "table",
+			"items": [
+				{ "type": "text", "width": "50%", "name": "name", "devid": "devid", "filter": false, "sort": false }
+			]
 		}
 	}
 }
