@@ -165,10 +165,10 @@ class GreensolarBattery extends utils.Adapter {
 					// here calling function and value in return will be brought back to admin page
 					const resultFromFunction = {
 						native: {
-							mqttUserId: '1232445564356',
-							mqttUserName: 'login.User',
-							mqttPwd: 'login.Password',
-							mqttClientId: 'login.clientID'
+							mqttUserId: '1232445564356'
+							//mqttUserName: 'login.User',
+							//mqttPwd: 'login.Password',
+							//mqttClientId: 'login.clientID'
 						}
 					};
 					this.sendTo(obj.from, obj.command, resultFromFunction, obj.callback);
@@ -195,7 +195,7 @@ class GreensolarBattery extends utils.Adapter {
 							message: text
 						};
 						//this.sendTo(obj.from, obj.command, result, obj.callback);
-						if (obj.callback) this.sendTo(obj.from, obj.command, result, obj.callback);
+						this.sendTo(obj.from, obj.command, result, obj.callback);
 					}
 					break;
 			}

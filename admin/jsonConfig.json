@@ -76,7 +76,6 @@
 			"command": "create",
 			"variant": "outlined",
 			"useNative": true,
-			"saveConfig": true,
 			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\"}}"
 		},
 		"_test": {
@@ -115,7 +114,7 @@
 		"_devicetable": {
 			"newLine": true,
 			"type": "header",
-			"text": "Device settings in table",
+			"text": "Device settings in table format",
 			"sm": 12,
 			"md": 12,
 			"lg": 12,
