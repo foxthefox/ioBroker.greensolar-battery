@@ -54,6 +54,7 @@
 		"mode": "daemon",
 		"type": "iot-systems",
 		"compact": true,
+		"messagebox": true,
 		"connectionType": "cloud",
 		"dataSource": "push",
 		"adminUI": {
