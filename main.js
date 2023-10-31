@@ -164,12 +164,14 @@ class GreensolarBattery extends utils.Adapter {
 					this.log.info('obj msg' + JSON.stringify(obj.message));
 					// here calling function and value in return will be brought back to admin page
 					const resultFromFunction = {
-						native: {
-							mqttUserId: '1232445564356'
-							//mqttUserName: 'login.User',
-							//mqttPwd: 'login.Password',
-							//mqttClientId: 'login.clientID'
-						}
+						native: [
+							{
+								mqttUserId: '1232445564356'
+							},
+							{ mqttUserName: 'login.User' },
+							{ mqttPwd: 'login.Password' },
+							{ mqttClientId: 'login.clientID' }
+						]
 					};
 					this.sendTo(obj.from, obj.command, resultFromFunction, obj.callback);
 					// Send response in callback if required
