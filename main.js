@@ -171,19 +171,7 @@ class GreensolarBattery extends utils.Adapter {
 							mqttClientId: 'login.clientID'
 						}
 					};
-					this.sendTo(
-						obj.from,
-						obj.command,
-						{
-							native: {
-								mqttUserId: '1232445564356',
-								mqttUserName: 'login.User',
-								mqttPwd: 'login.Password',
-								mqttClientId: 'login.clientID'
-							}
-						},
-						obj.callback
-					);
+					this.sendTo(obj.from, obj.command, resultFromFunction, obj.callback);
 					// Send response in callback if required
 					//this.sendTo(obj.from, obj.command, 'close admin page and reopen', obj.callback);
 					//if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
@@ -207,7 +195,7 @@ class GreensolarBattery extends utils.Adapter {
 							message: text
 						};
 						//this.sendTo(obj.from, obj.command, result, obj.callback);
-						this.sendTo(obj.from, obj.command, { error: result }, obj.callback);
+						this.sendTo(obj.from, obj.command, { error: JSON.stringify(result) }, obj.callback);
 					}
 					break;
 			}
