@@ -89,11 +89,6 @@
 			"variant": "outlined",
 			"jsonData": "{\"user\": \"${data.userName}\", \"msg\": \"Hello World\"}}"
 		},
-		"deviceName": {
-			"type": "text",
-			"label": "device Name",
-			"newLine": true
-		},
 		"_device": {
 			"newLine": true,
 			"type": "header",
@@ -102,6 +97,11 @@
 			"md": 12,
 			"lg": 12,
 			"size": 3
+		},
+		"deviceName": {
+			"type": "text",
+			"label": "device Name",
+			"newLine": true
 		},
 		"deviceId": {
 			"type": "text",
