@@ -83,6 +83,7 @@
 			"label": "Test Message Feedback",
 			"command": "test",
 			"variant": "contained",
+			"showProcess": true,
 			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\", \"url\": \"${data.mqttBrokerl}\", \"port\": ${data.mqttPort}, \"clientId\": \"${data.mqttClientId}\"}"
 		},
 		"_send": {
@@ -90,6 +91,7 @@
 			"label": "Send for MSG",
 			"command": "send",
 			"variant": "outlined",
+			"showProcess": true,
 			"jsonData": "{\"user\": \"${data.userName}\", \"msg\": \"Hello World\"}}"
 		},
 		"_device": {
@@ -124,7 +126,6 @@
 			"sm": 12,
 			"newLine": true,
 			"type": "table",
-			"uniqueColumns": [ 2 ],
 			"items": [
 				{
 					"type": "text",
