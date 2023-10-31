@@ -154,14 +154,14 @@ class GreensolarBattery extends utils.Adapter {
 			if (obj.command === 'send') {
 				// e.g. send email or pushover or whatever
 				this.log.info('other send command');
+				this.log.info('obj msg ' + JSON.stringify(obj.message));
 				// Send response in callback if required
 				if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
 			}
 			switch (obj.command) {
 				case 'create':
 					this.log.info('send msg create login data');
-					this.log.info('obj' + JSON.stringify(obj.message));
-					this.log.info('obj' + obj.message);
+					this.log.info('obj msg' + JSON.stringify(obj.message));
 					// here calling function and value in return will be brought back to admin page
 					const resultFromFunction = {
 						native: {
@@ -181,8 +181,7 @@ class GreensolarBattery extends utils.Adapter {
 				case 'test':
 					// Try to provide message to admin page
 					this.log.info('send msg for text feedback');
-					this.log.info('obj' + JSON.stringify(obj.message));
-					this.log.info('obj' + obj.message);
+					this.log.info('obj msg' + JSON.stringify(obj.message));
 					if (obj.callback && obj.message) {
 						const url = obj.message.url + ':' + obj.message.port;
 						const optionsMqtt = {
@@ -195,7 +194,8 @@ class GreensolarBattery extends utils.Adapter {
 						const result = {
 							message: text
 						};
-						this.sendTo(obj.from, obj.command, result, obj.callback);
+						//this.sendTo(obj.from, obj.command, result, obj.callback);
+						if (obj.callback) this.sendTo(obj.from, obj.command, result, obj.callback);
 					}
 					break;
 			}

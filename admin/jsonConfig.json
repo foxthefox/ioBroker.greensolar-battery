@@ -84,7 +84,6 @@
 			"label": "Test Message Feedback",
 			"command": "test",
 			"variant": "contained",
-			"openUrl": true,
 			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\", \"url\": \"${data.mqttBrokerl}\", \"port\": ${data.mqttPort}, \"clientId\": \"${data.mqttClientId}\"}"
 		},
 		"_send": {
