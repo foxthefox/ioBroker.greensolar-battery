@@ -80,7 +80,7 @@
 		},
 		"_test": {
 			"type": "sendTo",
-			"label": "Test Message Feedback",
+			"label": "Test Message Box Feedback",
 			"command": "test",
 			"variant": "contained",
 			"showProcess": true,
@@ -150,29 +150,10 @@
 					"width": "20%",
 					"options": [
 						{ "value": "none", "label": "none" },
-						{ "value": "pstream600", "label": "Powerstream 600W" },
-						{ "value": "pstream800", "label": "Powerstream 800W" }
+						{ "value": "basic22", "label": "Version 2,2kWh" }
 					],
-					"title": "Powerstream Type",
+					"title": "Battery Type",
 					"attr": "streamType",
-					"filter": false,
-					"sort": false,
-					"default": "none"
-				},
-				{
-					"type": "select",
-					"width": "30%",
-					"options": [
-						{ "value": "none", "label": "none" },
-						{ "value": "deltamini", "label": "Delta Mini 882Wh" },
-						{ "value": "delta", "label": "Delta 1260Wh" },
-						{ "value": "deltamax", "label": "Delta Max 1600/2000" },
-						{ "value": "deltapro", "label": "Delta Pro" },
-						{ "value": "delta2", "label": "Delta 2" },
-						{ "value": "delta2max", "label": "Delta 2 Max" }
-					],
-					"title": "Power Station Type",
-					"attr": "stationType",
 					"filter": false,
 					"sort": false,
 					"default": "none"
