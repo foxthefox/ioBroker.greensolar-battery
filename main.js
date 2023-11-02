@@ -176,10 +176,10 @@ class GreensolarBattery extends utils.Adapter {
 						obj.command,
 						{
 							native: {
-								mqttUserId: '1232445564356',
-								mqttUserName: 'login.User',
-								mqttPwd: 'login.Password',
-								mqttClientId: 'login.clientID'
+								'data.mqttUserId': '1232445564356',
+								'data.mqttUserName': 'login.User',
+								'data.mqttPwd': 'login.Password',
+								'data.mqttClientId': 'login.clientID'
 							}
 						},
 						obj.callback
