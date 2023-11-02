@@ -129,7 +129,7 @@
 			"items": [
 				{
 					"type": "text",
-					"width": "50%",
+					"width": "20%",
 					"title": "name",
 					"attr": "devname",
 					"filter": false,
@@ -138,7 +138,7 @@
 				},
 				{
 					"type": "text",
-					"width": "50%",
+					"width": "20%",
 					"title": "id",
 					"attr": "devid",
 					"filter": false,
@@ -147,6 +147,7 @@
 				},
 				{
 					"type": "select",
+					"width": "20%",
 					"options": [
 						{ "value": "none", "label": "none" },
 						{ "value": "pstream600", "label": "Powerstream 600W" },
@@ -160,6 +161,7 @@
 				},
 				{
 					"type": "select",
+					"width": "30%",
 					"options": [
 						{ "value": "none", "label": "none" },
 						{ "value": "deltamini", "label": "Delta Mini 882Wh" },
@@ -170,7 +172,7 @@
 						{ "value": "delta2max", "label": "Delta 2 Max" }
 					],
 					"title": "Power Station Type",
-					"attr": "streamType",
+					"attr": "stationType",
 					"filter": false,
 					"sort": false,
 					"default": "none"

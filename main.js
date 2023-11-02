@@ -192,10 +192,17 @@ class GreensolarBattery extends utils.Adapter {
 						};
 						const text = JSON.stringify(url) + JSON.stringify(optionsMqtt);
 						const result = {
-							message: text
+							message: text,
+							message2: text,
+							message3: text,
+							message4: text,
+							message5: text,
+							message6: text,
+							message7: text,
+							message8: text
 						};
 						//this.sendTo(obj.from, obj.command, result, obj.callback);
-						this.sendTo(obj.from, obj.command, { error: JSON.stringify(result) }, obj.callback);
+						this.sendTo(obj.from, obj.command, { error1: JSON.stringify(result) }, obj.callback);
 					}
 					break;
 			}
