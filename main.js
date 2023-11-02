@@ -202,7 +202,7 @@ class GreensolarBattery extends utils.Adapter {
 							message8: text
 						};
 						//this.sendTo(obj.from, obj.command, result, obj.callback);
-						this.sendTo(obj.from, obj.command, { error1: JSON.stringify(result) }, obj.callback);
+						this.sendTo(obj.from, obj.command, { error: JSON.stringify(result) }, obj.callback);
 					}
 					break;
 			}
