@@ -75,7 +75,7 @@
 			"command": "create",
 			"variant": "outlined",
 			"useNative": true,
-			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\"}}"
+			"jsonData": "{\"user\": \"${data.mqttUserName}\", \"pass\": \"${data.mqttPwd}\"}"
 		},
 		"_test": {
 			"type": "sendTo",
@@ -101,16 +101,6 @@
 			"md": 12,
 			"lg": 12,
 			"size": 3
-		},
-		"deviceName": {
-			"type": "text",
-			"label": "device Name",
-			"newLine": true
-		},
-		"deviceId": {
-			"type": "text",
-			"label": "device Id",
-			"newLine": true
 		},
 		"_devicetable": {
 			"newLine": true,
@@ -149,13 +139,33 @@
 					"width": "20%",
 					"options": [
 						{ "value": "none", "label": "none" },
-						{ "value": "basic22", "label": "Version 2,2kWh" }
+						{ "value": "b2500", "label": "B2500 (2,2kWh)" }
 					],
 					"title": "Battery Type",
 					"attr": "streamType",
 					"filter": false,
 					"sort": false,
 					"default": "none"
+				},
+				{
+					"type": "checkbox",
+					"title": "Slave 1",
+					"width": "10%",
+					"hidden": "data.pstationType !== 'b2500'",
+					"attr": "stationSlave1",
+					"filter": false,
+					"sort": false,
+					"default": false
+				},
+				{
+					"type": "checkbox",
+					"title": "Slave 2",
+					"width": "10%",
+					"hidden": "data.pstationType !== 'b2500' ",
+					"attr": "stationSlave12",
+					"filter": false,
+					"sort": false,
+					"default": false
 				}
 			]
 		}
