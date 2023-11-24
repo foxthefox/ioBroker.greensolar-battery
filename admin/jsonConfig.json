@@ -52,7 +52,7 @@
 					"type": "text",
 					"width": "20%",
 					"title": "name",
-					"attr": "devId",
+					"attr": "deviceId",
 					"filter": false,
 					"sort": false,
 					"default": ""
@@ -61,7 +61,7 @@
 					"type": "text",
 					"width": "20%",
 					"title": "id",
-					"attr": "devName",
+					"attr": "deviceName",
 					"filter": false,
 					"sort": false,
 					"default": ""
@@ -83,7 +83,7 @@
 					"type": "checkbox",
 					"title": "Slave 1",
 					"width": "10%",
-					"hidden": "data.deviceType === 'b2500'",
+					"hidden": "data.deviceType === 'gs_b2500'",
 					"attr": "deviceSlave1",
 					"filter": false,
 					"sort": false,
@@ -93,8 +93,8 @@
 					"type": "checkbox",
 					"title": "Slave 2",
 					"width": "10%",
-					"hidden": "data.deviceType === 'b2500' ",
-					"attr": "deviceSlave12",
+					"hidden": "data.deviceType === 'gs_b2500' ",
+					"attr": "deviceSlave2",
 					"filter": false,
 					"sort": false,
 					"default": false
