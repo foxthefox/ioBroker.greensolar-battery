@@ -42,7 +42,7 @@
 			"zh-cn": "greensolar battery"
 		},
 		"authors": [ "foxthefox <foxthefox@wysiwis.net>" ],
-		"keywords": [ "greensolar", "battery", "mqtt", "solar" ],
+		"keywords": [ "greensolar", "marstek", "be cool", "bluepalm", "plentisolar", "battery", "mqtt", "solar" ],
 		"license": "MIT",
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
@@ -73,17 +73,13 @@
 		]
 	},
 	"native": {
-		"userName": "user",
-		"userPassword": "pw456",
-		"mqttBroker": "http://mqtt",
-		"mqttPort": 8883,
-		"mqttUserId": "id",
-		"mqttUserName": "name",
-		"mqttPwd": "pw123",
-		"mqttClientId": "client",
-		"deviceName": "",
-		"deviceId": "",
-		"devices": []
+		"devices": [],
+		"updateCycle": 5,
+		"msgStateCreationBattery": false,
+		"msgUpdateBattery": false,
+		"msgUpdateValueBattery": false,
+		"msgSetGetBattery": true,
+		"msgCmdBattery": true
 	},
 	"objects": [],
 	"instanceObjects": [

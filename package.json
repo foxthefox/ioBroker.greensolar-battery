@@ -21,7 +21,8 @@
     "node": ">= 16"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.0.4"
+    "@iobroker/adapter-core": "^3.0.4",
+    "@stoprocent/noble": "^1.13.6"
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.2.0",

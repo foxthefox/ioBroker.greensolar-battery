@@ -9,7 +9,8 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+const myutils = require('./lib/adapter_utils.js');
+const bat = require('./lib/battery_utils.js');
 
 class GreensolarBattery extends utils.Adapter {
 	/**
@@ -20,6 +21,12 @@ class GreensolarBattery extends utils.Adapter {
 			...options,
 			name: 'greensolar-battery'
 		});
+		this.msgCountBattery = 0;
+		this.msgReconnects = 0;
+		this.batteryStates = null;
+		this.batteryStatesDict = null;
+		this.batteryCmd = null;
+		this.batteries = {};
 		this.on('ready', this.onReady.bind(this));
 		this.on('stateChange', this.onStateChange.bind(this));
 		// this.on('objectChange', this.onObjectChange.bind(this));
@@ -32,63 +39,209 @@ class GreensolarBattery extends utils.Adapter {
 	 */
 	async onReady() {
 		// Initialize your adapter here
+		this.log.info('adapter entered ready');
+		try {
+			this.batteryStates = require('./lib/battery_data.js').batteryStates;
+			this.batteryStatesDict = require('./lib/battery_data.js').batteryStatesDict['battery'];
+			this.batteryCmd = require('./lib/battery_data.js').bleCmd;
+
+			//modify this.batteryStates
+			this.log.info('your configration:');
+			this.log.info('battery  -> ' + JSON.stringify(this.config.devices));
+		} catch (error) {
+			this.log.error('read config ' + error);
+		}
+		try {
+			//loop durch alle batteries
+			if (this.config.devices.length > 0) {
+				for (let batt = 0; batt < this.config.devices.length; batt++) {
+					const type = this.config.devices[batt]['deviceType'];
+					if (type !== 'none' && type !== '') {
+						const id = this.config.devices[batt]['deviceId'];
+						const name = this.config.devices[batt]['deviceName'];
+						this.batteries[id] = {};
+						this.batteries[id]['deviceType'] = type;
+						this.batteries[id]['deviceName'] = name;
+
+						let battStates = require('./lib/battery_data.js').batteryStates;
+						// manipulation of ranges when 600W version
+						if (type !== 'none' && battStates) {
+							const battupd = require('./lib/battery_data.js').batteryRanges[type];
+							this.log.debug('pstation upd ' + JSON.stringify(battupd));
+							if (battupd) {
+								if (Object.keys(battupd).length > 0) {
+									for (let channel in battupd) {
+										for (let type in battupd[channel]) {
+											for (let state in battupd[channel][type]) {
+												for (let value in battupd[channel][type][state]) {
+													this.log.debug(
+														'manipulate: ' +
+															channel +
+															'/' +
+															state +
+															' old--new ' +
+															battStates[channel][type][state][value] +
+															' -- ' +
+															battupd[channel][type][state][value]
+													);
+													battStates[channel][type][state][value] =
+														battupd[channel][type][state][value];
+												}
+											}
+										}
+									}
+								} else {
+									this.log.error('battery upd not possible');
+								}
+							} else {
+								this.log.warn('did not get batteryupd');
+							}
+						} else {
+							this.log.error(
+								'deviceType not set -> ' + type + 'or no batteryStates -> ' + this.batteryStates
+							);
+						}
+						//create battery objects
+						const battStatesDict = this.batteryStatesDict[type];
+
+						if (type !== 'none' && battStates && battStatesDict) {
+							this.log.info('start battery state creation ->' + type + ' for Id ' + id);
+							try {
+								if (this.config.msgStateCreationBattery) {
+									this.log.debug('____________________________________________');
+									this.log.debug('create  device ' + id);
+								}
+								await this.setObjectNotExistsAsync(id, {
+									type: 'device',
+									common: {
+										name: name,
+										role: 'device'
+									},
+									native: {}
+								});
+								for (let part in battStatesDict) {
+									if (this.config.msgStateCreationBattery) {
+										this.log.debug('____________________________________________');
+										this.log.debug('create  channel ' + part);
+									}
+									await myutils.createMyChannel(this, id, part, part, 'channel');
+									for (let key in battStatesDict[part]) {
+										let type = battStatesDict[part][key]['entity'];
+										if (type !== 'icon') {
+											if (battStates[part][type][key]) {
+												await myutils.createMyState(
+													this,
+													id,
+													part,
+													key,
+													battStates[part][type][key]
+												);
+											} else {
+												this.log.info(
+													'not created/mismatch ->' + part + ' ' + key + ' ' + type
+												);
+											}
+										}
+									}
+								}
+								this.log.info('battery states created for ' + id + ' / ' + type + ' / ' + name);
+							} catch (error) {
+								this.log.error('create states battery ' + error);
+							}
+						} else {
+							this.log.error(
+								'something empty ID->' +
+									id +
+									'states -> ' +
+									battStates +
+									' dict -> ' +
+									this.batteryStatesDict +
+									' type -> ' +
+									type
+							);
+						}
+					} else {
+						this.log.warn('"none" or no configuration, you can delete the row in the table');
+					}
+				}
+			}
+		} catch (error) {
+			this.log.error('modification or state creation went wrong ->' + error);
+		}
+		//additional states for observance
+		myutils.createInfoStates(this);
+
+		//BLE communication
+
+		//Request Device Date
+		if (Object.keys(this.batteries).length > 0) {
+			for (let key in this.batteries) {
+				const topic = key;
+
+				//here add request
+				const message =
+					'733C2304747970653D484D422D332C69643D3336323131313530346434363131333734362134353931322C6D61633D65383864613661623131383277';
+
+				const msgdecode = bat.decodeMsg(this, message);
+				if (this.config.msgUpdateBattery) {
+					this.log.debug('battery: ' + JSON.stringify(msgdecode));
+				}
+				if (msgdecode !== null && typeof msgdecode === 'object') {
+					if (Object.keys(msgdecode).length > 0) {
+						//storeStreamPayload handles multiple objects
+						await bat.storeStreamPayload(
+							this,
+							this.batteryStatesDict,
+							this.batteryStates,
+							topic,
+							msgdecode
+						);
+					}
+				}
+				this.msgCountBattery++;
+				await this.setStateAsync('info.msgCountBattery', {
+					val: this.msgCountBattery,
+					ack: true
+				});
+			}
+		}
+
+		//Request cyclic data
+
+		if (Object.keys(this.batteries).length > 0) {
+			for (let key in this.batteries) {
+				const topic = key;
+
+				//here add request
+				const message = '0x731023030000000000003E037C010100010054FF0001430700000000000000';
+
+				const msgdecode = bat.decodeMsg(this, message);
+				if (this.config.msgUpdateBattery) {
+					this.log.debug('battery: ' + JSON.stringify(msgdecode));
+				}
+				if (msgdecode !== null && typeof msgdecode === 'object') {
+					if (Object.keys(msgdecode).length > 0) {
+						//storeStreamPayload handles multiple objects
+						await bat.storeStreamPayload(
+							this,
+							this.batteryStatesDict,
+							this.batteryStates,
+							topic,
+							msgdecode
+						);
+					}
+				}
+				this.msgCountBattery++;
+				await this.setStateAsync('info.msgCountBattery', {
+					val: this.msgCountBattery,
+					ack: true
+				});
+			}
+		}
+		this.log.debug('updating cycle ' + this.config.updateCycle);
 
 		// Reset the connection indicator during startup
 		this.setState('info.connection', false, true);
-
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
-		// this.config:
-		this.log.info('config userName: ' + this.config.userName);
-		this.log.info('config userPassword: ' + this.config.userPassword);
-		this.log.info('config mqttBroker: ' + this.config.mqttBroker);
-		this.log.info('config deviceName: ' + this.config.deviceName);
-		this.log.info('config deviceId: ' + this.config.deviceId);
-		this.log.info('devices ' + JSON.stringify(this.config.devices));
-
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-		await this.setObjectNotExistsAsync('testVariable', {
-			type: 'state',
-			common: {
-				name: 'testVariable',
-				type: 'boolean',
-				role: 'indicator',
-				read: true,
-				write: true
-			},
-			native: {}
-		});
-
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates('testVariable');
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates('lights.*');
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates('*');
-
-		/*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync('testVariable', true);
-
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync('testVariable', { val: true, ack: true });
-
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
-
-		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync('admin', 'iobroker');
-		this.log.info('check user admin pw iobroker: ' + result);
-
-		result = await this.checkGroupAsync('admin', 'admin');
-		this.log.info('check group user admin group admin: ' + result);
 	}
 
 	/**
