@@ -12,7 +12,7 @@
 			"size": 3
 		},
 		"updateCycle": {
-			"type": "value",
+			"type": "number",
 			"label": "update cycle",
 			"newLine": false,
 			"sm": 12,
