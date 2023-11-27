@@ -51,7 +51,7 @@
 				{
 					"type": "text",
 					"width": "20%",
-					"title": "name",
+					"title": "id",
 					"attr": "deviceId",
 					"filter": false,
 					"sort": false,
@@ -60,7 +60,7 @@
 				{
 					"type": "text",
 					"width": "20%",
-					"title": "id",
+					"title": "name",
 					"attr": "deviceName",
 					"filter": false,
 					"sort": false,
