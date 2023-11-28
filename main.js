@@ -264,32 +264,65 @@ class GreensolarBattery extends utils.Adapter {
 		}
 	}
 
-	// If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-	// You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-	// /**
-	//  * Is called if a subscribed object changes
-	//  * @param {string} id
-	//  * @param {ioBroker.Object | null | undefined} obj
-	//  */
-	// onObjectChange(id, obj) {
-	// 	if (obj) {
-	// 		// The object was changed
-	// 		this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-	// 	} else {
-	// 		// The object was deleted
-	// 		this.log.info(`object ${id} deleted`);
-	// 	}
-	// }
-
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
 	 * @param {ioBroker.State | null | undefined} state
 	 */
-	onStateChange(id, state) {
+	async onStateChange(id, state) {
 		if (state) {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			if (!state.ack) {
+				const idsplit = id.split('.');
+				const device = idsplit[2];
+				const channel = idsplit[3];
+				const item = idsplit[4];
+				this.log.info('(ack=false) ->cmd : channel ' + channel + ' state ' + item);
+				//mqtt
+				// const get_type = 'HMB-3'
+				// const get_id = '360111504b57313435124601'
+				// const topic = '/hame_energy/' +get_type + '/' + get_id + '/ctrl';
+
+				let devicetype = '';
+
+				if (this.batteries && this.batteryCmd) {
+					if (this.batteries[device]) {
+						devicetype = this.batteries[device]['deviceType'];
+					}
+				} else {
+					this.log.warn(
+						'batteries -> ' + this.batteries + ' or batteryCmd problematic -> ' + this.batteryCmd
+					);
+				}
+				//currently always ble
+				if (devicetype !== '' && devicetype !== 'none' && this.batteryCmd) {
+					const msgBuf = await bat.createBlePayload(
+						this,
+						devicetype,
+						device,
+						channel,
+						item,
+						state.val,
+						this.batteryCmd
+					);
+					this.log.debug('msgBuf ' + msgBuf);
+
+					/*
+					if (this.client) {
+						this.client.publish(topic, msgBuf, { qos: 1 }, (error) => {
+							if (error) {
+								this.log.error('Error when publishing the MQTT message:: ' + error);
+							} else {
+								if (this.config.msgCmdBattery) {
+									this.log.debug('Message succesfully published.');
+								}
+							}
+						});
+					}
+					*/
+				}
+			}
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
