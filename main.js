@@ -175,8 +175,10 @@ class GreensolarBattery extends utils.Adapter {
 
 		//Request Device Date
 		if (Object.keys(this.batteries).length > 0) {
+			this.log.debug('requesting generic device values');
 			for (let key in this.batteries) {
 				const topic = key;
+				this.log.debug('requesting device ' + topic);
 
 				//here add request
 				const message =

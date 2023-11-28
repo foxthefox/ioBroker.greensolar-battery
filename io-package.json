@@ -16,18 +16,9 @@
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "greensolar mqtt cloud",
+		"title": "greensolar ble",
 		"titleLang": {
-			"en": "greensolar mqtt cloud",
-			"de": "greensolar mqtt cloud",
-			"ru": "greensolar mqtt cloud",
-			"pt": "greensolar mqtt cloud",
-			"nl": "greensolar mqtt cloud",
-			"fr": "greensolar mqtt cloud",
-			"it": "greensolar mqtt cloud",
-			"es": "greensolar mqtt cloud",
-			"pl": "greensolar mqtt cloud",
-			"zh-cn": "greensolar mqtt cloud"
+			"en": "greensolar ble"
 		},
 		"desc": {
 			"en": "greensolar battery",
