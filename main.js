@@ -224,7 +224,13 @@ class GreensolarBattery extends utils.Adapter {
 				if (msgdecode !== null && typeof msgdecode === 'object') {
 					if (Object.keys(msgdecode).length > 0) {
 						//storeStreamPayload handles multiple objects
-						await bat.storePayload(this, this.batteryStatesDict, this.batteryStates, topic, msgdecode);
+						await bat.storePayload(
+							this,
+							this.batteryStatesDict['gs_b2500'],
+							this.batteryStates,
+							topic,
+							msgdecode
+						);
 					}
 				}
 				this.msgCountBattery++;
