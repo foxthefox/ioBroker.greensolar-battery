@@ -43,7 +43,7 @@ class GreensolarBattery extends utils.Adapter {
 		try {
 			this.batteryStates = require('./lib/battery_data.js').batteryStates;
 			this.batteryStatesDict = require('./lib/battery_data.js').batteryStatesDict;
-			this.batteryCmd = require('./lib/battery_data.js').bleCmd;
+			this.batteryCmd = require('./lib/battery_data.js').batteryCmd;
 
 			//modify this.batteryStates
 			this.log.info('your configration:');
